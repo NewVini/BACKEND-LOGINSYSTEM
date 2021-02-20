@@ -13,8 +13,6 @@ module.exports = (app) => {
         const btnSend = await frame.waitForSelector('._2Ujuu')
         await btnSend.click()
 
-        // console.log(btnSend.click)
-
         await app.utils.utils.sleep(500)
         await browser.close();
 
