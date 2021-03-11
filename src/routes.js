@@ -1,5 +1,9 @@
-const { response } = require("express")
+const express = require('express')
+const whatsApp = require('./controllers/whatsapp')
 
-module.exports = (app) => {
-  app.post('/', app.controllers.whatsapp.sendMessage)
-}
+const routes = express.Router()
+
+routes.post('/send-message', whatsApp.sendMessage)
+routes.get('/connect', whatsApp.connect)
+
+module.exports = routes

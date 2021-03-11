@@ -1,16 +1,15 @@
 const express = require('express')
-const consign = require('consign')
+const cors = require('cors')
+const routes = require('./routes')
+const puppeteer = require('puppeteer')
 
 const app = express()
 
+app.use(cors())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
-consign({ cwd: 'src' })
-  .include('utils')
-  .then('controllers')
-  .then('routes.js')
-  .into(app)
+app.use(routes)
 
 app.listen(3000, () => {
   console.log('app running at port 3000')
