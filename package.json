@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/app"
+    "test": "echo %test%",
+    "dev": "nodemon src/app",
+    "migration": "npx sequelize migration:generate --name",
+    "migrate": "npx sequelize-cli db:migrate"
   },
   "keywords": [],
   "author": "",
@@ -13,10 +15,13 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "mysql2": "^2.2.5",
     "puppeteer": "^7.1.0",
+    "sequelize": "^6.6.2",
     "venom-bot": "^3.0.9"
   },
   "devDependencies": {
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "sequelize-cli": "^6.2.0"
   }
 }
