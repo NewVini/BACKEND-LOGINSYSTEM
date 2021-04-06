@@ -6,8 +6,8 @@ const sessionController = require('./controllers/session')
 
 const routes = express.Router()
 
-routes.post('/send-message', whatsAppController.sendMessage)
-routes.get('/connect', whatsAppController.connect)
+routes.post('/whatsapp/send-message', whatsAppController.sendMessage)
+routes.get('/whatsapp/connect', whatsAppController.connect)
 
 routes.post('/user/create', userController.create)
 
