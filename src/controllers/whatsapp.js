@@ -40,11 +40,12 @@ module.exports = {
 
       for (const phone of phones) {
         try {
+          console.log(message)
           await page.goto(`https://web.whatsapp.com/send?phone=${phone}&text=${message}`);
           await page.waitForSelector("div#startup", { hidden: true, timeout: 60000 });
-          const btnSend = await page.waitForSelector('._1E0Oz')
+          const btnSend = await page.waitForSelector('._1E0Oz', { timeout: 5000 })
           await btnSend.click()
-          await page.waitForTimeout(500)
+          await page.waitForTimeout(1350)
           counter.sucess.push(phone)
         } catch (error) {
           counter.fails.push(phone)

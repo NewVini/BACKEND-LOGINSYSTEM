@@ -21,7 +21,6 @@ app.use((req, res, next) => {
   const authHeader = req.headers['authorization']
   if (!authHeader) return res.status(400).json({ error: 'Inexistent token' })
   const token = authHeader && authHeader.split(' ')[0]
-  console.log(authHeader.split(' '))
 
   if (token == null) return res.status(401).send('INVALID-LOGIN')
 
