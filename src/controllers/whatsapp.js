@@ -4,6 +4,7 @@ const puppeteer = require('puppeteer')
 const { v4: uuid } = require('uuid')
 
 const { WhatsappTokens } = require('./../models')
+const csv = require('./../utils/csv')
 
 module.exports = {
   async sendMessage(req, res) {
@@ -105,5 +106,14 @@ module.exports = {
     })
 
     return
+  },
+
+  async csvMessages(req, res) {
+    const csvNumbers = await csv.parse(req.body.spreadsheet, req.body.separator)
+
+    req.body.numbers = csvNumbers
+    for (const number of csvNumbers) {
+      this.sendMessage()
+    }
   }
 }
