@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "npx mocha -w --parallel './test/**/*.test.js'",
+    "start": "node src/app",
     "dev": "nodemon src/app",
     "migration": "npx sequelize migration:generate --name",
     "migrate": "npx sequelize db:migrate"
