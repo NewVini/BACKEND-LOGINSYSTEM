@@ -2,7 +2,7 @@ const csv = require('csv-parser')
 const stream = require('stream')
 
 module.exports = {
-  async parse(spreadsheet, separator) {
+  async parse(spreadsheet) {
     const bufferStream = new stream.PassThrough()
     spreadsheet = spreadsheet.split(',').reverse()[0]
     spreadsheet = Buffer.from(spreadsheet, 'base64').toString('utf-8')
@@ -13,7 +13,7 @@ module.exports = {
     let rows = await new Promise((resolve, reject) => {
       const results = []
       bufferStream
-        .pipe(csv({ separator }))
+        .pipe(csv({ separator: ';' }))
         .on('data', (data) => results.push(data))
         .on('error', reject)
         .on('end', () => {
