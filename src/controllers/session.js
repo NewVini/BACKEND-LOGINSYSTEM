@@ -4,10 +4,10 @@ const jwt = require('./../utils/jwt')
 
 module.exports = {
   async create(req, res) {
-    const { username, password } = req.body
+    const { email, password } = req.body
 
-    if (!username) {
-      return res.status(400).json({ error: 'Preencha o usuário' })
+    if (!email) {
+      return res.status(400).json({ error: 'Preencha o email' })
     }
     if (!password) {
       return res.status(400).json({ error: 'Preencha a senha' })
@@ -15,7 +15,7 @@ module.exports = {
 
     const user = await User.findOne({
       where: {
-        username,
+        email,
         password
       }
     })

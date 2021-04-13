@@ -8,7 +8,7 @@ module.exports = {
     if (!body.name) {
       return res.status(400).json({ error: 'Nome não preenchido' })
     }
-    if (!body.username) {
+    if (!body.email) {
       return res.status(400).json({ error: 'Usuário não preenchido' })
     }
     if (!body.password) {
