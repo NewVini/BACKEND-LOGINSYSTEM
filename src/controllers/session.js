@@ -27,5 +27,20 @@ module.exports = {
     const token = jwt.sign({ id: user.id })
 
     return res.json({ token })
+  },
+
+  async validate(req, res) {
+    try {
+      if (req.body) {
+        const token = jwt.verify(req.body.token)
+        if (token) {
+          return res.send(true)
+        }
+        return res.status(400).json({ err: 'error on token' })
+      }
+    } catch (error) {
+      console.log(error)
+      return res.status(500).json(error)
+    }
   }
 }

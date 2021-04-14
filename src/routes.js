@@ -13,5 +13,6 @@ routes.get('/whatsapp/connect', whatsAppController.connect)
 routes.post('/user/create', userController.create)
 
 routes.post('/session/login', sessionController.create)
+routes.post('/session/validate', sessionController.validate)
 
 module.exports = routes
