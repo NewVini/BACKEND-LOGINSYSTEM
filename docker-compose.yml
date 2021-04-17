@@ -17,4 +17,4 @@ services:
     - MYSQL_ROOT_PASSWORD=admin
     - MYSQL_DATABASE=dev_big_zap
     ports:
-    - 33006:3306
+    - 3306:3306
