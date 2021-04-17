@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  backend:
+    build: .
+    ports:
+    - 3000:3000
+    volumes:
+    - "./:/home/node/big-zap"
+
+  database:
+    image: mysql:5.7
+    volumes:
+    - ./mysql-data:/var/lib/mysql
+    environment:
+    - MYSQL_ROOT_PASSWORD=admin
+    - MYSQL_DATABASE=dev_big_zap
+    ports:
+    - 33006:3306
