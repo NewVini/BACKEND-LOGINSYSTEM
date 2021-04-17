@@ -4,6 +4,7 @@ const puppeteer = require('puppeteer')
 const { v4: uuid } = require('uuid')
 
 const { WhatsappTokens } = require('./../models')
+const csv = require('./../utils/csv')
 
 module.exports = {
   async sendMessage(req, res) {
@@ -42,9 +43,9 @@ module.exports = {
         try {
           await page.goto(`https://web.whatsapp.com/send?phone=${phone}&text=${message}`);
           await page.waitForSelector("div#startup", { hidden: true, timeout: 60000 });
-          const btnSend = await page.waitForSelector('._1E0Oz')
+          const btnSend = await page.waitForSelector('._1E0Oz', { timeout: 5000 })
           await btnSend.click()
-          await page.waitForTimeout(500)
+          await page.waitForTimeout(1350)
           counter.sucess.push(phone)
         } catch (error) {
           counter.fails.push(phone)
@@ -104,5 +105,61 @@ module.exports = {
     })
 
     return
+  },
+
+  async csvMessages(req, res) {
+    const csvNumbers = await csv.parse(req.body.spreadsheet)
+    const { message } = req.body
+
+    const tokens = await WhatsappTokens.findOne({
+      where: {
+        user_id: req.headers.user.id
+      }
+    })
+    try {
+      const browser = await puppeteer.launch({ headless: false })
+      const page = await browser.newPage()
+      page.on('dialog', async dialog => {
+        await dialog.accept()
+      })
+
+      await page.goto('https://web.whatsapp.com')
+      await page.evaluate((tokens) => {
+        localStorage.clear();
+        localStorage.setItem('WAToken1', JSON.stringify(tokens.wa_token1))
+        localStorage.setItem('WAToken2', JSON.stringify(tokens.wa_token2))
+        localStorage.setItem('WABrowserId', JSON.stringify(tokens.wa_browser_id))
+        localStorage.setItem('WASecretBundle', JSON.stringify({
+          key: tokens.key,
+          encKey: tokens.enc_key,
+          macKey: tokens.mac_key
+        }))
+      }, tokens)
+
+      const counter = {
+        sucess: [],
+        fails: []
+      }
+
+      for (const phone of csvNumbers) {
+        try {
+          await page.goto(`https://web.whatsapp.com/send?phone=${phone.Numeros}&text=${message}`);
+          await page.waitForSelector("div#startup", { hidden: true, timeout: 60000 });
+          await page.waitForTimeout(600)
+          const btnSend = await page.waitForSelector('._1E0Oz', { timeout: 5000 })
+          await btnSend.click()
+          await page.waitForTimeout(1000)
+          counter.sucess.push(phone)
+        } catch (error) {
+          counter.fails.push(phone)
+          console.log(error)
+        }
+      }
+
+      await browser.close()
+    } catch (error) {
+      console.log(error)
+      res.status(500).json(error)
+    }
   }
 }
