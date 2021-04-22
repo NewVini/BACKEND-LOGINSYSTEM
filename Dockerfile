@@ -1,14 +1,11 @@
 FROM node:14.15.4-alpine3.12
 
+RUN apk add bash
+
 USER node
 
 WORKDIR /home/node/big-zap
 
-COPY package*.json ./
-
-RUN npm install
-
 COPY . .
 
-EXPOSE 3000
-ENTRYPOINT [ "npm", "start" ]
+ENTRYPOINT [ "./.docker/entrypoint.sh" ]
