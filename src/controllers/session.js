@@ -26,7 +26,14 @@ module.exports = {
 
     const token = jwt.sign({ id: user.id })
 
-    return res.json({ token })
+    return res.json({
+      user: {
+        email: user.email,
+        name: user.name,
+        phone: user.phone,
+      },
+      token
+    })
   },
 
   async validate(req, res) {

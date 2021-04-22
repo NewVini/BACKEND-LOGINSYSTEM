@@ -20,7 +20,7 @@ app.use((req, res, next) => {
 
   const authHeader = req.headers['authorization']
   if (!authHeader) return res.status(400).json({ error: 'Inexistent token' })
-  const token = authHeader && authHeader.split(' ')[0]
+  const token = authHeader && authHeader.split('Bearer')[1].trim()
 
   if (token == null) return res.status(401).send('INVALID-LOGIN')
 
@@ -35,8 +35,8 @@ app.use((req, res, next) => {
 
 app.use(routes)
 
-app.listen(3000, () => {
-  console.log('app running at port 3000')
+app.listen(3001, () => {
+  console.log('app running at port 3001')
 })
 
 // const puppeteer = require('puppeteer');
