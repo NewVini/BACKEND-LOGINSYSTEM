@@ -9,13 +9,22 @@ const csv = require('./../utils/csv')
 module.exports = {
   async sendMessage(req, res) {
     const { message, phones } = req.body
+
+    if (!phones[0]) {
+      return res.status(400).json({ error: 'Envie pelo menos um número!' })
+    }
+    if (!message) {
+      return res.status(400).json({ error: 'Digite uma mensagem para enviar!' })
+    }
+
     const tokens = await WhatsappTokens.findOne({
       where: {
         user_id: req.headers.user.id
       }
     })
+
     try {
-      const browser = await puppeteer.launch({ headless: false })
+      const browser = await puppeteer.launch({ headless: false, slowMo: 5 })
       const page = await browser.newPage()
       page.on('dialog', async dialog => {
         await dialog.accept()
