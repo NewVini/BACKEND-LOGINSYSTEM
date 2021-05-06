@@ -24,7 +24,10 @@ module.exports = {
     })
 
     try {
-      const browser = await puppeteer.launch({ headless: false, slowMo: 5 })
+      const browser = await puppeteer.launch({ headless: false, slowMo: 5, args: [
+        '--no-sandbox',
+        '--disable-setui-sandbox'
+      ] })
       const page = await browser.newPage()
       page.on('dialog', async dialog => {
         await dialog.accept()
