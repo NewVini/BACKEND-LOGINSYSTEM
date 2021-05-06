@@ -26,7 +26,7 @@ module.exports = {
     try {
       const browser = await puppeteer.launch({ headless: false, slowMo: 5, args: [
         '--no-sandbox',
-        '--disable-setui-sandbox'
+        '--disable-setuid-sandbox'
       ] })
       const page = await browser.newPage()
       page.on('dialog', async dialog => {
