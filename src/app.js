@@ -35,7 +35,7 @@ app.use((req, res, next) => {
 
 app.use(routes)
 
-app.listen(3001, () => {
+app.listen(process.env.PORT || 3001, () => {
   console.log('app running at port 3001')
 })
 
