@@ -8,7 +8,8 @@
     "start": "node src/app",
     "dev": "nodemon src/app",
     "migration": "npx sequelize migration:generate --name",
-    "migrate": "npx sequelize db:migrate"
+    "migrate": "npx sequelize db:migrate",
+    "prod-migrate": "npx sequelize db:migrate --env production"
   },
   "keywords": [],
   "author": "",
