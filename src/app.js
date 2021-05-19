@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 app.use((req, res, next) => {
-  const unauthenticatedRoutes = ['/session/login']
+  const unauthenticatedRoutes = ['/session/login', '/user/create']
   if (unauthenticatedRoutes.includes(req.path)) {
     return next()
   }
